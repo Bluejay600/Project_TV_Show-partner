@@ -99,3 +99,19 @@ async function fetchEpisodes() {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+      const episodes = await response.json();
+    makePageForEpisodes(episodes);
+  } catch (error) {
+    console.error("Error fetching episodes:", error);
+    rootElem.innerHTML = `
+      <div class="error">
+        <p>⚠️ Sorry, something went wrong while loading the episodes.</p>
+        <p>Please try refreshing the page.</p>
+      </div>
+    `;
+  }
+}
+
+window.onload = function () {
+  fetchEpisodes();
+};
