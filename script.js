@@ -91,3 +91,11 @@ episodeSelect.addEventListener("change", function () {
 // === Fetch Episodes ===
 async function fetchEpisodes() {
   const rootElem = document.getElementById("root");
+ // Show loading message
+  rootElem.innerHTML = `<p class="loading">Loading episodes, please wait...</p>`;
+
+  try {
+    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
