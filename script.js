@@ -88,5 +88,6 @@ episodeSelect.addEventListener("change", function () {
     searchCount.textContent = `Showing 1 / ${allEpisodes.length} episodes`;
   }
 });
-
-window.onload = setup;
+// === Fetch Episodes ===
+async function fetchEpisodes() {
+  const rootElem = document.getElementById("root");
