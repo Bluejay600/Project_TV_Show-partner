@@ -1,13 +1,25 @@
- let allEpisodes = []; // Global so it can be used across functions.
+// === Fetch Episodes ===
+async function fetchEpisodes() {
+  const rootElem = document.getElementById("root");
+ // Show loading message
+  rootElem.innerHTML = `<p class="loading">Loading episodes, please wait...</p>`;
 
-function setup() {
-  allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-  populateEpisodeSelect(allEpisodes);
-}
-
-function makePageForEpisodes(episodeList) {
-  displayEpisodes(episodeList);
+  try {
+    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+      const episodes = await response.json();
+    makePageForEpisodes(episodes);
+  } catch (error) {
+    console.error("Error fetching episodes:", error);
+    rootElem.innerHTML = `
+      <div class="error">
+        <p>⚠️ Sorry, something went wrong while loading the episodes.</p>
+        <p>Please try refreshing the page.</p>
+      </div>
+    `;
+  }
 }
  function displayEpisodes(episodes) {
   const rootElem = document.getElementById("root");
@@ -88,29 +100,7 @@ episodeSelect.addEventListener("change", function () {
     searchCount.textContent = `Showing 1 / ${allEpisodes.length} episodes`;
   }
 });
-// === Fetch Episodes ===
-async function fetchEpisodes() {
-  const rootElem = document.getElementById("root");
- // Show loading message
-  rootElem.innerHTML = `<p class="loading">Loading episodes, please wait...</p>`;
 
-  try {
-    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-      const episodes = await response.json();
-    makePageForEpisodes(episodes);
-  } catch (error) {
-    console.error("Error fetching episodes:", error);
-    rootElem.innerHTML = `
-      <div class="error">
-        <p>⚠️ Sorry, something went wrong while loading the episodes.</p>
-        <p>Please try refreshing the page.</p>
-      </div>
-    `;
-  }
-}
 
 window.onload = function () {
   fetchEpisodes();
