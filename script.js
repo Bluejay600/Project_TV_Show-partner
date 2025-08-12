@@ -1,3 +1,7 @@
+let allEpisodes = []; // Global so it can be used across functions to store API data.
+//global variable declairation to store all episodes data 
+const rootElem = document.getElementById("root");
+
 // === Fetch Episodes ===
 function setup() {  
   showLoadingMessage();
@@ -22,7 +26,6 @@ function setup() {
     });
 }
  function displayEpisodes(episodes) {
-  const rootElem = document.getElementById("root");
   rootElem.innerHTML = ""; // Clear previous content
 
   episodes.forEach((episode) => {
