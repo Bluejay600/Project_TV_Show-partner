@@ -1,6 +1,8 @@
 let allEpisodes = []; // Global so it can be used across functions to store API data.
 //global variable declairation to store all episodes data 
 const rootElem = document.getElementById("root");
+const searchInput = document.getElementById("search-input");
+const searchCount = document.getElementById("search-count");
 
 // === Fetch Episodes ===
 function setup() {  
@@ -57,9 +59,6 @@ function formatEpisodeCode(season, number) {
   return `S${seasonStr}E${numberStr}`;
 }
   // === Live Search ===
-const searchInput = document.getElementById("search-input");
-const searchCount = document.getElementById("search-count");
-
 searchInput.addEventListener("input", function () {
   const searchTerm = searchInput.value.toLowerCase();
   const filteredEpisodes = allEpisodes.filter((episode) => {
