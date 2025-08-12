@@ -1,25 +1,25 @@
 // === Fetch Episodes ===
-async function fetchEpisodes() {
-  const rootElem = document.getElementById("root");
- // Show loading message
-  rootElem.innerHTML = `<p class="loading">Loading episodes, please wait...</p>`;
-
-  try {
-    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-      const episodes = await response.json();
-    makePageForEpisodes(episodes);
-  } catch (error) {
-    console.error("Error fetching episodes:", error);
-    rootElem.innerHTML = `
-      <div class="error">
-        <p>⚠️ Sorry, something went wrong while loading the episodes.</p>
-        <p>Please try refreshing the page.</p>
-      </div>
-    `;
-  }
+function setup() {  
+  showLoadingMessage();
+  fetch("https://api.tvmaze.com/shows/82/episodes")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      allEpisodes = data;
+      hideMessage();
+      displayEpisodes(allEpisodes);
+      searchCount.textContent = `Showing ${allEpisodes.length} / ${allEpisodes.length} episodes`;
+      // Populate the episode selector with all episodes
+      populateEpisodeSelect(allEpisodes);
+    })
+    .catch((error) => {
+      showErrorMessage("Failed to load episodes. Please try again later.");
+      console.error(error);
+    });
 }
  function displayEpisodes(episodes) {
   const rootElem = document.getElementById("root");
