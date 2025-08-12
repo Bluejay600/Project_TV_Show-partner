@@ -3,6 +3,7 @@ let allEpisodes = []; // Global so it can be used across functions to store API 
 const rootElem = document.getElementById("root");
 const searchInput = document.getElementById("search-input");
 const searchCount = document.getElementById("search-count");
+const episodeSelect = document.getElementById("episode-select");
 
 // === Fetch Episodes ===
 function setup() {  
@@ -72,10 +73,8 @@ searchInput.addEventListener("input", function () {
 });
 
 // === Episode Selector
-const episodeSelect = document.getElementById("episode-select");
-
 function populateEpisodeSelect(episodes) {
-  episodeSelect.innerHTML = ""; // Clear previous options
+  episodeSelect.innerHTML = '<option value="all">Show all episodes</option>'; // Clear previous options
   episodes.forEach((episode) => {
     const option = document.createElement("option");
     option.value = episode.id;
