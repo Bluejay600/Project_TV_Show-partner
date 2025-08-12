@@ -101,8 +101,16 @@ episodeSelect.addEventListener("change", function () {
     searchCount.textContent = `Showing 1 / ${allEpisodes.length} episodes`;
   }
 });
+// ====== LOADING & ERROR MESSAGES ======
+function showLoadingMessage() {
+  rootElem.innerHTML = "<p>Loading episodes, please wait...</p>";
+}
 
+function showErrorMessage(msg) {
+  rootElem.innerHTML = `<p style="color:red;">${msg}</p>`;
+}
 
-window.onload = function () {
-  fetchEpisodes();
-};
+function hideMessage() {
+  rootElem.innerHTML = "";
+}
+window.onload = setup;
